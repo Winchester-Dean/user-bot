@@ -38,26 +38,13 @@ class UserBotInfoModule(TGCLIENT):
         async def user_bot_info(msg):
             try:
                 text = (
-                    "Link: <a href='"
-                    f"{self.get_remote_url()}'>"
-                    "user-bot</a>\n"
-                    "Author: <a href='"
-                    "tg://user?id=5209528492'>"
-                    "Dean Winchester</a>\n"
-                    "Telegram channel: <a href='"
-                    "https://t.me/Winchester_Community'>"
-                    "@Winchester Community</a>\n"
-                    "GitHub: <a href='"
-                    "https://github.com/Winchester-Dean'>"
-                    "link</a>\n"
-                    "License: <a href='"
-                    "https://github.com/Winchester-Dean/"
-                    "user-bot/blob/main/LICENCE'>"
-                    "GNU GPL v3</a>\n"
-                    "Commit: <a href='"
-                    f"{self.get_remote_url()}/commit/"
-                    f"{self.get_current_commit()}'>Link</a>"
-                    f" by {self.get_author_name()}"
+                    f"<strong>Link:</strong> <a href='{self.get_remote_url()}'>user-bot</a>\n"
+                    "<strong>Author:</strong> <a href='tg://user?id=5209528492'>Dean Winchester</a>\n"
+                    "<strong>Telegram channel:</strong> <a href='https://t.me/Winchester_Community'>@Winchester_Community</a>\n"
+                    "<strong>GitHub:</strong> <a href='https://github.com/Winchester-Dean'>Link</a>\n"
+                    "<strong>License:</strong> <a href='https://github.com/Winchester-Dean/user-bot/blob/main/LICENCE'>GNU GPL v3</a>\n"
+                    f"<strong>Commit:</strong> <a href='{self.get_remote_url()}/commit/{self.get_current_commit()}'>Link</a> <strong>by {self.get_author_name()}</strong>\n"
+                    "<strong>Documentation:</strong> <a href='https://user-bot-documentation'>Link</a>"
                 )
 
                 await msg.edit(text, parse_mode="html")
