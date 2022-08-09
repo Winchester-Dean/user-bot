@@ -1,5 +1,5 @@
-# https://github.com/KrasProject-2021
-# Copyright (C) 2022  KrasProject-2021
+# https://github.com/Winchester-Dean
+# Copyright (C) 2022 Winchester-Dean
 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation, either version 3 of the License
@@ -11,11 +11,11 @@
 # You should have received a copy of the GNU General Public License along with this program.
 # If not, see <https://www.gnu.org/licenses/>.
 
-from tgclient import TGCLIENT
+from session_config import SessionConfig
 from telethon import events
 from telethon.tl.functions.users import GetFullUserRequest
 
-class UserInfoModule(TGCLIENT):
+class UserInfoModule(SessionConfig):
     """User info module command: .info"""
     def start(self):
         @self.client.on(

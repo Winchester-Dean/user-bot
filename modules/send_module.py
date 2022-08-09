@@ -1,5 +1,5 @@
-# https://github.com/KrasProject-2021
-# Copyright (C) 2022  KrasProject-2021
+# https://github.com/Winchester-Dean
+# Copyright (C) 2022  Winchester-Dean
 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation, either version 3 of the License
@@ -15,10 +15,10 @@ import os
 import inspect
 
 from importlib import import_module
-from tgclient import TGCLIENT
+from session_config import SessionConfig
 from telethon import events
 
-class SendModule(TGCLIENT):
+class SendModule(SessionConfig):
     """Send module command .sendmodule"""
     def start(self):
         @self.client.on(
@@ -29,10 +29,9 @@ class SendModule(TGCLIENT):
         async def send_module_handler(msg):
             try:
                 directory: str = "modules"
-                files = os.listdir(directory)
 
-                for file in files:
-                    if file.endswith(".py") and file.startswith("_"):
+                for file in os.listdir(directory):
+                    if file.endswith(".py"):
                         file = file[:-3]
 
                         modules = import_module(

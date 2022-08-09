@@ -1,5 +1,5 @@
-# https://github.com/KrasProject-2021
-# Copyright (C) 2022  KrasProject-2021
+# https://github.com/Winchester-Dean
+# Copyright (C) 2022  Winchester-Dean
 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation, either version 3 of the License
@@ -13,10 +13,10 @@
 
 import random
 
-from tgclient import TGCLIENT
+from session_config import SessionConfig
 from telethon import events
 
-class TagAllModule(TGCLIENT):
+class TagAllModule(SessionConfig):
     """Tag all nodule command: .tagall"""
     def start(self):
         @self.client.on(

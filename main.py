@@ -1,5 +1,5 @@
-# https://github.com/KrasProject-2021
-# Copyright (C) 2022  KrasProject-2021
+# https://github.com/Winchester-Dean
+# Copyright (C) 2022  Winchester-Dean
 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation, either version 3 of the License
@@ -16,10 +16,9 @@ import inspect
 
 from typing import List, Callable, Awaitable, Union
 from importlib import import_module
-from tgclient import TGCLIENT
+from session_config import SessionConfig
 
-class main(TGCLIENT):
-    """Main"""
+class Main(SessionConfig):
     def __init__(
         self,
         directory: str = "modules"
@@ -28,7 +27,7 @@ class main(TGCLIENT):
         self.files = os.listdir(directory)
 
         for file in self.files:
-            if file.endswith(".py") and file.startswith("_"):
+            if file.endswith(".py"):
                 file = file[:-3]
 
                 self.modules = import_module(
@@ -58,6 +57,8 @@ class main(TGCLIENT):
                     doc
                 )
             )
+
+        print()
         
         with self.client:
             for modules in self.all_modules:
@@ -67,9 +68,9 @@ class main(TGCLIENT):
 
 if __name__ == "__main__":
     print(
-        "Copyright (C) 2022  https://github.com/KrasProject-2021/user-bot\n"
+        "Copyright (C) 2022  https://github.com/Winchester-Dean/user-bot\n"
         "This program comes with ABSOLUTELY NO WARRANTY.\n"
         "This is free software, and you are welcome to redistribute it under certain conditions.\n"
     )
 
-    main().start()
+    Main().start()

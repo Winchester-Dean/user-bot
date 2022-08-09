@@ -1,5 +1,5 @@
-# https://github.com/KrasProject-2021
-# Copyright (C) 2022  KrasProject-2021
+# https://github.com/Winchester-Dean
+# Copyright (C) 2022  Winchester-Dean
 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation, either version 3 of the License
@@ -11,16 +11,19 @@
 # You should have received a copy of the GNU General Public License along with this program.
 # If not, see <https://www.gnu.org/licenses/>.
 
-from tgclient import TGCLIENT
-from telethon import events
+import toml
 
-class ExampleModule(TGCLIENT):
-    """Example module command: .example"""
-    def start(self):
-        @self.client.on(
-            events.NewMessage(
-                pattern=".example"
-            )
-        )
-        async def example_handler(msg):
-            await msg.edit("Example")
+from telethon import TelegramClient
+
+with open('./config.toml') as config:
+    config = toml.load(config)['app']
+
+class SessionConfig:
+    api_id = config['api_id']
+    api_hash = config['api_hash']
+    
+    client = TelegramClient(
+        'my_session',
+        api_id,
+        api_hash
+    )

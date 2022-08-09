@@ -1,5 +1,5 @@
-# https://github.com/KrasProject-2021
-# Copyright (C) 2022  KrasProject-2021
+# https://github.com/Winchester-Dean
+# Copyright (C) 2022  Winchester-Dean
 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation, either version 3 of the License
@@ -16,21 +16,20 @@ import inspect
 
 from typing import List, Callable, Awaitable, Union
 from importlib import import_module
-from tgclient import TGCLIENT
+from session_config import SessionConfig
 from telethon import events
 
 
-class HelpModule(TGCLIENT):
+class HelpModule(SessionConfig):
     """Help module command: .help"""
     def __init__(
         self,
         directory: str = "modules"
     ):
         self.all_modules: List[Union[Callable, Awaitable]] = []
-        self.files = os.listdir(directory)
 
-        for file in self.files:
-            if file.endswith(".py") and file.startswith("_"):
+        for file in os.listdir(directory):
+            if file.endswith(".py"):
                 file = file[:-3]
 
                 self.modules = import_module(
