@@ -19,7 +19,8 @@ from telethon import events
 
 
 class TerminalModule(TGCLIENT):
-    """Terminal module command: .terminal {command}"""
+    """Terminal module command: 
+        .terminal {command}"""
     def get_base_dir(self):
         return self.get_dir("user-bot")
     
