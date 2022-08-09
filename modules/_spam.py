@@ -17,7 +17,8 @@ from tgclient import TGCLIENT
 from telethon import events
 
 class SpamModule(TGCLIENT):
-    """Spam module command: .spam {count} {sleep} {text}"""
+    """Spam module command: 
+        .spam {count} {sleep} {text}"""
     def start(self):
         @self.client.on(
             events.NewMessage(
