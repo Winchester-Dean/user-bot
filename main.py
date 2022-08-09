@@ -66,11 +66,6 @@ class main(TGCLIENT):
             self.client.run_until_disconnected()
 
 if __name__ == "__main__":
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
-
     print(
         "Copyright (C) 2022  https://github.com/KrasProject-2021/user-bot\n"
         "This program comes with ABSOLUTELY NO WARRANTY.\n"
