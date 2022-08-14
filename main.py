@@ -51,10 +51,9 @@ class Main(SessionConfig):
             class_name, instance, doc = module
 
             print(
-                "{}. {}: {}".format(
+                "{}. {}".format(
                     index + 1,
-                    class_name,
-                    doc
+                    class_name
                 )
             )
 
@@ -67,6 +66,12 @@ class Main(SessionConfig):
             self.client.run_until_disconnected()
 
 if __name__ == "__main__":
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
+
+
     print(
         "Copyright (C) 2022  https://github.com/Winchester-Dean/user-bot\n"
         "This program comes with ABSOLUTELY NO WARRANTY.\n"

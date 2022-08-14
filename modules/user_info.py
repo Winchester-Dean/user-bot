@@ -16,51 +16,51 @@ from telethon import events
 from telethon.tl.functions.users import GetFullUserRequest
 
 class UserInfoModule(SessionConfig):
-    """User info module command: .info"""
-    def start(self):
-        @self.client.on(
-            events.NewMessage(
-                pattern=".info"
+    """Command: .info"""
+    async def user_info_handler(self, msg):
+        try:
+            if not msg.is_reply:
+                return await msg.edit(
+                    "This command must be sent as a reply to one's message!"
+                )
+
+            reply_msg = await self.client.get_messages(
+                msg.peer_id,
+                ids=msg.reply_to.reply_to_msg_id
             )
-        )
-        async def user_info_handler(msg):
-            try:
-                if not msg.is_reply:
-                    await msg.edit(
-                        "This command must be sent as a reply to one's message!"
-                    )
-                    return
-                
-                reply_msg = await self.client.get_messages(
-                    msg.peer_id,
-                    ids=msg.reply_to.reply_to_msg_id
-                )
-                user_id = reply_msg.from_id
 
-                user = await self.client(
-                    GetFullUserRequest(
-                        user_id
-                    )
-                )
+            user_id = reply_msg.from_id
 
-                await msg.edit(f"""User info:
-ID: <code>{user.user.id}</code>
-UserName: <code>@{user.user.username}</code>
+            user = await self.client(
+                GetFullUserRequest(
+                    user_id
+                )
+            )
+
+            await msg.edit(f"""🙇 User info:
+🆔 ID: <code>{user.user.id}</code>
+✡️ UserName: <code>@{user.user.username}</code>
 First name: <code>{user.user.first_name}</code>
 Last name: <code>{user.user.last_name}</code>
-Phone: <code>{user.user.phone}</code>
-Bio: <code>{user.about}</code>
-Is deleted: <code>{user.user.deleted}</code>
-Is bot: <code>{user.user.bot}</code>
-Is scam: <code>{user.user.scam}</code>
-Is fake: <code>{user.user.fake}</code>
-Is blocked: <code>{user.blocked}</code>
-User link: <a href='tg://user?id={user.user.id}'>link</a>
-                    """,
-                    parse_mode="html"
-                )
-            except Exception as error:
-                await msg.edit(
-                    f"Error: <code>{error}</code>",
-                    parse_mode="html"
-                )
+📞 Phone: <code>{user.user.phone}</code>
+🔤 Bio: <code>{user.about}</code>
+❌ Is deleted: <code>{user.user.deleted}</code>
+🤖 Is bot: <code>{user.user.bot}</code>
+🚫 Is scam: <code>{user.user.scam}</code>
+👎 Is fake: <code>{user.user.fake}</code>
+❔ Is blocked: <code>{user.blocked}</code>
+🔗 User link: <a href='tg://user?id={user.user.id}'>link</a>
+                """,
+                parse_mode="html"
+            )
+        except Exception as error:
+            await msg.edit(
+                f"Error: <code>{error}</code>",
+                parse_mode="html"
+            )
+
+    def start(self):
+        self.client.add_event_handler(
+            self.user_info_handler,
+            events.NewMessage(pattern=".info")
+        )

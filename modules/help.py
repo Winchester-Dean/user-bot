@@ -21,7 +21,7 @@ from telethon import events
 
 
 class HelpModule(SessionConfig):
-    """Help module command: .help"""
+    """Command: .help"""
     def __init__(
         self,
         directory: str = "modules"
@@ -45,31 +45,32 @@ class HelpModule(SessionConfig):
                             classname,
                             classobj.__doc__
                         ))
+
+    async def help_handler(self, msg):
+        try:
+            text = (
+                "<b>💪 All modules:</b>\n\n"
+            )
+
+            for index, module in enumerate(
+                self.all_modules
+            ):
+                class_name, doc = module
+
+                text += "▫️  <code>{}</code>: {}\n".format(
+                    class_name,
+                    doc
+                )
+
+            await msg.edit(text, parse_mode="html")
+        except Exception as error:
+            await msg.edit(
+                f"⚠ Error: <code>{error}</code>",
+                parse_mode="html"
+            )
     
     def start(self):
-        @self.client.on(
-            events.NewMessage(
-                pattern=".help"
-            )
+        self.client.add_event_handler(
+            self.help_handler,
+            events.NewMessage(pattern=".help")
         )
-        async def help_handler(msg):
-            try:
-                text = (
-                    "All modules:\n"
-                )
-
-                for index, module in enumerate(self.all_modules):
-                    class_name, doc = module
-
-                    text += "{}. <code>{}</code>: {}\n".format(
-                        index + 1,
-                        class_name,
-                        doc
-                    )
-
-                await msg.edit(text, parse_mode="html")
-            except Exception as error:
-                await msg.edit(
-                    f"Error: <code>{error}</code>",
-                    parse_mode="html"
-                )

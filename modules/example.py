@@ -15,12 +15,12 @@ from session_config import SessionConfig
 from telethon import events
 
 class ExampleModule(SessionConfig):
-    """Example module command: .example"""
+    """Command: .example"""
+    async def example_handler(self, msg):
+        await msg.edit("Example")
+
     def start(self):
-        @self.client.on(
-            events.NewMessage(
-                pattern=".example"
-            )
+        self.client.add_event_handler(
+            self.example_handler,
+            events.NewMessage(pattern=".example")
         )
-        async def example_handler(msg):
-            await msg.edit("Example")

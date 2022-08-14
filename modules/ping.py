@@ -16,25 +16,25 @@ from session_config import SessionConfig
 from telethon import events
 
 class PingModule(SessionConfig):
-    """Ping module command: .ping"""
-    def start(self):
-        @self.client.on(
-            events.NewMessage(
-                pattern=".ping"
-            )
-        )
-        async def ping_handler(msg):
-            try:
-                start = perf_counter()
-                await msg.edit("Testing...")
-                end = perf_counter()
-                await msg.edit(
-                    "Ping: {}s".format(
-                        round(end - start, 3)
-                    )
+    """Command: .ping"""
+    async def ping_handler(self, msg):
+        try:
+            start = perf_counter()
+            await msg.edit("Testing...")
+            end = perf_counter()
+            await msg.edit(
+                "Ping: {}s".format(
+                    round(end - start, 3)
                 )
-            except Exception as error:
-                await msg.edit(
-                    f"Error: <code>{error}</code>",
+            )
+        except Exception as error:
+            await msg.edit(
+                    f"⚠ Error: <code>{error}</code>",
                     parse_mode="html"
                 )
+
+    def start(self):
+        self.client.add_event_handler(
+            self.ping_handler,
+            events.NewMessage(pattern=".ping")
+        )

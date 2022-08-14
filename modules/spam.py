@@ -17,56 +17,71 @@ from session_config import SessionConfig
 from telethon import events
 
 class SpamModule(SessionConfig):
-    """Spam module command: 
+    """Command: 
         .spam {count} {sleep} {text}"""
-    def start(self):
-        @self.client.on(
-            events.NewMessage(
-                pattern=".spam"
+    async def spam_module_handler(self, msg):
+        try:
+            message = msg.message.text.split(
+                maxsplit=3
             )
-        )
-        async def spam_handler(msg):
-            try:
-                message = msg.message.text.split(
-                    maxsplit=3
-                )
-                if len(message) > 2:
-                    pass
-                else:
-                    await msg.edit("Error...")
-                    return
-                
-                count = message[1]
-                if count.isdigit():
-                    count = int(count)
-                else:
-                    await msg.edit("Error...")
-                    return
-
-                sleep = message[2]
-                if sleep.isdigit():
-                    sleep = int(sleep)
-                else:
-                    await msg.edit("Error...")
-                    return
-
-                text = "".join(
-                    message[3]
-                )
-
-                await msg.edit("Spam started!")
-
-                for i in range(count):
-                    await self.client.send_message(
-                        msg.chat_id,
-                        text
-                    )
-
-                    await asyncio.sleep(sleep)
-                
-                await msg.edit("Spam endend!")
-            except Exception as error:
+            if len(message) > 2:
+                pass
+            else:
                 await msg.edit(
-                    f"Error: <code>{error}</code>",
+                    "⚠️ <b>Error...</b>",
                     parse_mode="html"
                 )
+                return
+            
+            count = message[1]
+            if count.isdigit():
+                count = int(count)
+            else:
+                await msg.edit(
+                    "⚠️ <b>Error...</b>",
+                    parse_mode="html"
+                )
+                return
+            
+            sleep = message[2]
+            if sleep.isdigit():
+                sleep = int(sleep)
+            else:
+                await msg.edit(
+                    "⚠️ <b>Error...</b>",
+                    parse_mode="html"
+                )
+                return
+            
+            text = "".join(
+                message[3]
+            )
+
+            await msg.edit(
+                "❗ <b>Spam started!</b>",
+                parse_mode="html"
+            )
+
+            for i in range(count):
+                await self.client.send_message(
+                    msg.chat_id,
+                    text
+                )
+
+                await asyncio.sleep(sleep)
+
+            await msg.edit(
+                "✔️ <b>Spam endend!</b>",
+                parse_mode="html"
+            )
+        except Exception as error:
+            await msg.edit(
+                f"⚠️ <b>Error:</b> <code>{error}</code>",
+                parse_mode="html"
+            )
+
+    def start(self):
+        self.client.add_event_handler(
+            self.spam_module_handler,
+            events.NewMessage(pattern=".spam")
+        )

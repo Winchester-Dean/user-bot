@@ -16,7 +16,7 @@ from session_config import SessionConfig
 from telethon import events
 
 class UserBotInfoModule(SessionConfig):
-    """User bot info command: .botinfo"""
+    """Command: .botinfo"""
     def __init__(self):
         self.repo = Repo()
     
@@ -28,28 +28,29 @@ class UserBotInfoModule(SessionConfig):
     
     def get_remote_url(self):
         return list(self.repo.remote().urls)[0]
-    
-    def start(self):
-        @self.client.on(
-            events.NewMessage(
-                pattern=".botinfo"
-            )
-        )
-        async def user_bot_info(msg):
-            try:
-                text = (
-                    f"<strong>Link:</strong> <a href='{self.get_remote_url()}'>user-bot</a>\n"
-                    "<strong>Author:</strong> <a href='tg://user?id=5209528492'>Dean Winchester</a>\n"
-                    "<strong>Telegram channel:</strong> <a href='https://t.me/Winchester_Community'>@Winchester_Community</a>\n"
-                    "<strong>GitHub:</strong> <a href='https://github.com/Winchester-Dean'>Link</a>\n"
-                    "<strong>License:</strong> <a href='https://github.com/Winchester-Dean/user-bot/blob/main/LICENCE'>GNU GPL v3</a>\n"
-                    f"<strong>Commit:</strong> <a href='{self.get_remote_url()}/commit/{self.get_current_commit()}'>Link</a> <strong>by {self.get_author_name()}</strong>\n"
-                    "<strong>Documentation:</strong> <a href='https://user-bot-documentation'>Link</a>"
-                )
 
-                await msg.edit(text, parse_mode="html")
-            except Exception as error:
-                await msg.edit(
-                    f"Error: <code>{error}</code>",
-                    parse_mode="html"
-                )
+    async def user_bot_info(self, msg):
+        try:
+            text = (
+                f"\t\t<a href='{self.get_remote_url()}'>Winchester-Dean/user-bot</a>\n"
+                f"<b>🔗 Link:</b> <a href='{self.get_remote_url()}'>user-bot</a>\n"
+                "<b>🛐 Author:</b> <a href='tg://user?id=5209528492'>Dean Winchester</a>\n"
+                "<b>❗ Telegram channel:</b> <a href='https://t.me/Winchester_Community'>@Winchester_Community</a>\n"
+                "<b>☑️  GitHub:</b> <a href='https://github.com/Winchester-Dean'>Link</a>\n"
+                "<b>📝 License:</b> <a href='https://github.com/Winchester-Dean/user-bot/blob/main/LICENCE'>GNU GPL v3</a>\n"
+                f"<b>📂 Commit:</b> <a href='{self.get_remote_url()}/commit/{self.get_current_commit()}'>Link</a> <b>by {self.get_author_name()}</b>\n"
+                "<b>📃 Documentation:</b> <a href='https://github.com/Winchester-Dean/user-bot-documentation'>Link</a> <strong>by Dean Winchester</strong>"
+            )
+
+            await msg.edit(text, parse_mode="html")
+        except Exception as error:
+            await msg.edit(
+                f"⚠️ <b>Error:</b> <code>{error}</code>",
+                parse_mode="html"
+            )
+
+    def start(self):
+        self.client.add_event_handler(
+            self.user_bot_info,
+            events.NewMessage(pattern=".botinfo")
+        )

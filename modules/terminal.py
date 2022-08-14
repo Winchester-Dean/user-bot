@@ -11,6 +11,7 @@
 # You should have received a copy of the GNU General Public License along with this program.
 # If not, see <https://www.gnu.org/licenses/>.
 
+import utils
 import os
 import asyncio
 
@@ -19,47 +20,8 @@ from telethon import events
 
 
 class TerminalModule(SessionConfig):
-    """Terminal module command: 
+    """Command: 
         .terminal {command}"""
-    def get_base_dir(self):
-        return self.get_dir("user-bot")
-    
-    def get_dir(self, mod):
-        return os.path.abspath(
-            os.path.dirname(
-                os.path.abspath(
-                    mod
-                )
-            )
-        )
-    
-    async def get_args_raw(self, msg):
-        try:
-            try:
-                message = msg.message.text
-            except AttributeError:
-                pass
-            except Exception as error:
-                await msg.edit(
-                    f"Error: <code>{error}</code>",
-                    parse_mode="html"
-                )
-                return
-            
-            if not message:
-                return False
-            
-            args = message.split(maxsplit=1)
-            if len(args) > 1:
-                return args[1]
-            
-            return ""
-        except Exception as error:
-            await msg.edit(
-                f"Error: <code>{error}</code>",
-                parse_mode="html"
-            )
-    
     async def run_command(self, msg, cmd):
         if len(cmd.split(" ")) > 1 and cmd.split(" ")[0] == "sudo":
             needsswitch = True
@@ -86,36 +48,37 @@ class TerminalModule(SessionConfig):
                 stdin=asyncio.subprocess.PIPE,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
-                cwd=self.get_base_dir()
+                cwd=utils.get_base_dir()
             )
 
             stdout, stderr = await sproc.communicate()
             stdout = stdout.decode()
+            stderr = stderr.decode()
             await msg.edit(
-                f"Result:\n<code>{stdout}</code>\n"
-                f"<code>{stderr}</code>",
+                f"✔️ <b>Result:</b>\n<code>{stdout}</code>\n"
+                f"<b>Stderr:</b>\n<code>{stderr}</code>",
                 parse_mode="html"
             )
         except Exception as error:
             await msg.edit(
-                f"Error: <code>{error}</code>",
+                f"⚠ <b>Error:</b> <code>{error}</code>",
+                parse_mode="html"
+            )
+
+    async def terminal_handler(self, msg):
+        try:
+            await self.run_command(
+                msg,
+                await utils.get_args_raw(msg)
+            )
+        except Exception as error:
+            await msg.edit(
+                f"⚠ <b>Error:</b> <code>{error}</code>",
                 parse_mode="html"
             )
 
     def start(self):
-        @self.client.on(
-            events.NewMessage(
-                pattern=".terminal"
-            )
+        self.client.add_event_handler(
+            self.terminal_handler,
+            events.NewMessage(pattern=".terminal")
         )
-        async def terminal_handler(msg):
-            try:
-                await self.run_command(
-                    msg,
-                    await self.get_args_raw(msg)
-                )
-            except Exception as error:
-                await msg.edit(
-                    f"Error: <code>{error}</code>",
-                    parse_mode="html"
-                )
