@@ -56,8 +56,7 @@ class HelpModule(SessionConfig):
             ):
                 doc = module
 
-                text += "▫️  {} \n{}\n".format(
-                    '-' * 20,
+                text += "▫️ {} \n".format(
                     doc
                 )
 
