@@ -12,7 +12,6 @@
 # If not, see <https://www.gnu.org/licenses/>.
 
 import speedtest
-import asyncio
 
 from session_config import SessionConfig
 from telethon import events
@@ -28,7 +27,7 @@ class SpeedTestModule(SessionConfig):
                 parse_mode="html"
             )
 
-            results = await asyncio.run(self.speedtester)
+            results = self.speedtester
 
             await msg.edit(f"""
 <b>Results:\n\n</b>
