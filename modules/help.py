@@ -51,13 +51,13 @@ class HelpModule(SessionConfig):
                 "<b>💪 All modules:</b>\n\n"
             )
 
-            for module in enumerate(
+            for index, module in enumerate(
                 self.all_modules
             ):
                 doc = module
 
                 text += "▫️  {} \n{}\n".format(
-                    '-' * 10,
+                    '-' * 20,
                     doc
                 )
 
