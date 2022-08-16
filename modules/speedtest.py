@@ -27,7 +27,7 @@ class SpeedTestModule(SessionConfig):
                 parse_mode="html"
             )
 
-            results = self.speedtester
+            results = self.speedtester()
 
             await msg.edit(f"""
 <b>Results:\n\n</b>
@@ -46,8 +46,7 @@ class SpeedTestModule(SessionConfig):
                 parse_mode="html"
             )
 
-    @staticmethod
-    def speedtester() -> Tuple[float, float, float]:
+    def speedtester(self) -> Tuple[float, float, float]:
         s = speedtest.Speedtest()
 
         s.get_servers()
