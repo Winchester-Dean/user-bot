@@ -11,6 +11,7 @@
 # You should have received a copy of the GNU General Public License along with this program.
 # If not, see <https://www.gnu.org/licenses/>.
 
+import speedtest
 import asyncio
 
 from speedtest import Speedtest
@@ -49,7 +50,7 @@ class SpeedTestModule(SessionConfig):
 
     @staticmethod
     def speedtester() -> Tuple[float, float, float]:
-        s = Speedtest()
+        s = speedtest.Speedtest()
 
         s.get_servers()
         s.get_best_server()
