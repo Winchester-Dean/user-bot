@@ -20,7 +20,7 @@ from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 def get_base_dir():
     return get_dir("user-bot")
 
-def get_dir(self, mod):
+def get_dir(mod):
     return os.path.abspath(
         os.path.dirname(
             os.path.abspath(

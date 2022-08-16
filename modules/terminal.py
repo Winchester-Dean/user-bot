@@ -20,7 +20,7 @@ from telethon import events
 
 
 class TerminalModule(SessionConfig):
-    """Command: 
+    """Module for running bash command in terminal, command: 
         .terminal {command}"""
     async def run_command(self, msg, cmd):
         if len(cmd.split(" ")) > 1 and cmd.split(" ")[0] == "sudo":

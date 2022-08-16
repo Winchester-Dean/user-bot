@@ -17,8 +17,8 @@ from session_config import SessionConfig
 from telethon import events
 
 class SpamModule(SessionConfig):
-    """Command: 
-        .spam {count} {sleep} {text}"""
+    """Spam module command: 
+        spam {count} {sleep} {text}"""
     async def spam_module_handler(self, msg):
         try:
             message = msg.message.text.split(

@@ -17,7 +17,7 @@ from session_config import SessionConfig
 from telethon import events
 
 class TagAllModule(SessionConfig):
-    """Command: .tagall"""
+    """Tag all users in chat, command: tagall"""
     async def tag_all_handler(self, msg):
         try:
             users = await self.client.get_participants(

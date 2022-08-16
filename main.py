@@ -17,6 +17,9 @@ import inspect
 from typing import List, Callable, Awaitable, Union
 from importlib import import_module
 from session_config import SessionConfig
+from rich.console import Console
+
+console = Console()
 
 class Main(SessionConfig):
     def __init__(
@@ -46,12 +49,14 @@ class Main(SessionConfig):
                         ))
     
     def start(self):
-        print("All modules:\n")
+        console.print(
+            "[bold white]\t\tAll modules:[/]\n"
+        )
         for index, module in enumerate(self.all_modules):
             class_name, instance, doc = module
 
-            print(
-                "{}. {}".format(
+            console.print(
+                "[bold white]\t\t{}.[/] [bold green]{}[/]".format(
                     index + 1,
                     class_name
                 )
@@ -72,10 +77,10 @@ if __name__ == "__main__":
         os.system("clear")
 
 
-    print(
-        "Copyright (C) 2022  https://github.com/Winchester-Dean/user-bot\n"
-        "This program comes with ABSOLUTELY NO WARRANTY.\n"
-        "This is free software, and you are welcome to redistribute it under certain conditions.\n"
-    )
+    console.print("""[bold mageta]
+Copyright (C) 2022  https://github.com/Winchester-Dean/user-bot
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain conditions.
+    [/]""")
 
     Main().start()

@@ -15,7 +15,7 @@ from session_config import SessionConfig
 from telethon import events
 
 class ExampleModule(SessionConfig):
-    """Command: .example"""
+    """Example module command: example"""
     async def example_handler(self, msg):
         await msg.edit("Example")
 

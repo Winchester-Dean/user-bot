@@ -16,7 +16,7 @@ from session_config import SessionConfig
 from telethon import events
 
 class PingModule(SessionConfig):
-    """Command: .ping"""
+    """Module for check internet ping, command: ping"""
     async def ping_handler(self, msg):
         try:
             start = perf_counter()

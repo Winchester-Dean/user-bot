@@ -21,7 +21,7 @@ from telethon import events
 
 
 class HelpModule(SessionConfig):
-    """Command: .help"""
+    """View all modules, command: help"""
     def __init__(
         self,
         directory: str = "modules"
@@ -42,7 +42,6 @@ class HelpModule(SessionConfig):
                 ):
                     if classname.endswith("Module"):
                         self.all_modules.append((
-                            classname,
                             classobj.__doc__
                         ))
 
@@ -52,13 +51,13 @@ class HelpModule(SessionConfig):
                 "<b>💪 All modules:</b>\n\n"
             )
 
-            for index, module in enumerate(
+            for module in enumerate(
                 self.all_modules
             ):
-                class_name, doc = module
+                doc = module
 
-                text += "▫️  <code>{}</code>: {}\n".format(
-                    class_name,
+                text += "▫️  {} \n{}\n".format(
+                    '-' * 10,
                     doc
                 )
 

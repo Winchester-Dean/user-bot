@@ -16,7 +16,7 @@ from telethon import events
 from telethon.tl.functions.users import GetFullUserRequest
 
 class UserInfoModule(SessionConfig):
-    """Command: .info"""
+    """Module for module to find out information about the user, command: info"""
     async def user_info_handler(self, msg):
         try:
             if not msg.is_reply:

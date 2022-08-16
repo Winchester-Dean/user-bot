@@ -16,8 +16,8 @@ from session_config import SessionConfig
 from telethon import events
 
 class PythonModule(SessionConfig):
-    """Command: 
-        .python {code} and .eval {code}"""
+    """Python module command: 
+        python {code} and/or eval {code}"""
     async def python_module_handler(self, msg):
         try:
             await msg.edit(

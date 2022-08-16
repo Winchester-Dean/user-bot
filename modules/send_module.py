@@ -20,7 +20,7 @@ from session_config import SessionConfig
 from telethon import events
 
 class SendModule(SessionConfig):
-    """Command: .sendmodule"""
+    """Send module command: sendmodule"""
     async def send_module_handler(self, msg):
         try:
             directory: str = "modules"
