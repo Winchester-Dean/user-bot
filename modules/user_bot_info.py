@@ -16,7 +16,7 @@ from session_config import SessionConfig
 from telethon import events
 
 class UserBotInfoModule(SessionConfig):
-    """module for viewing information about the user bot,
+    """Module for viewing information about the user bot,
     command: botinfo"""
     def __init__(self):
         self.repo = Repo()
