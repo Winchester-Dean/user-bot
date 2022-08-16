@@ -14,7 +14,6 @@
 import speedtest
 import asyncio
 
-from speedtest import Speedtest
 from session_config import SessionConfig
 from telethon import events
 from typing import Tuple
