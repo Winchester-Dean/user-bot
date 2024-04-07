@@ -1,16 +1,3 @@
-# https://github.com/Winchester-Dean
-# Copyright (C) 2022  Winchester-Dean
-
-# This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation, either version 3 of the License
-
-# This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the GNU General Public License for more details.
-
-# You should have received a copy of the GNU General Public License along with this program.
-# If not, see <https://www.gnu.org/licenses/>.
-
 import telethon
 import os
 import shlex
@@ -42,13 +29,13 @@ async def get_args(message):
         message = message.split(maxsplit=1)
         if len(message) <= 1:
             return []
-
+        
         message = message[1]
         try:
             split = shlex.split(message)
         except ValueError:
             return message
-
+        
         return list(filter(x, split))
     except Exception as error:
         await message.edit(
@@ -63,11 +50,11 @@ async def get_args_raw(msg):
             message = msg.message.text
         except AttributeError as error:
             await msg.edit(
-                f"⚠ <b>Error:</b> <code>{error}</code>",
+                f"⚠ <b>Error: </b> <code>{error}</code>",
                 parse_mode="html"
             )
             pass
-        
+
         if not message:
             return False
         
@@ -77,10 +64,11 @@ async def get_args_raw(msg):
         
         return ""
     except Exception as error:
-        await msg.edit(
+        await message.edit(
             f"⚠ <b>Error:</b> <code>{error}</code>",
             parse_mode="html"
         )
+        return
 
 async def get_user(message):
     try:
