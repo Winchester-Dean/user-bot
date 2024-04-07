@@ -1,13 +1,12 @@
-import speedtest
-
+from speedtest import Speedtest
 from session_config import SessionConfig
 from telethon import events
 
 class SpeedTestModule(SessionConfig):
     """Speedtest module; command: <code>.speedtest</code>"""
-    async def speedtest(self, msg):
+    async def speedtestt(self, msg):
         try:
-            st = speedtest.Speedtest()
+            st = Speedtest()
 
             await msg.edit("Running testing...")
 
@@ -20,7 +19,7 @@ class SpeedTestModule(SessionConfig):
             ping = st.results.ping
 
             await msg.edit(
-                "<b>Results:\n\n</b>",
+                "<b>Results:</b>\n\n"
                 f"<b>🔽 Download:</b> {download_speed:.2f} Mbps\n"
                 f"<b>🔼 Upload:</b> {upload_speed:.2f} Mbps\n"
                 f"<b>Ping:</b> {ping:.2f} ms",
@@ -28,11 +27,12 @@ class SpeedTestModule(SessionConfig):
             )
         except Exception as error:
             await msg.edit(
-                f"⚠️ <b>Error:</b> <code>{error}</code>"
+                f"⚠️ <b>Error:</b> <code>{error}</code>",
+                parse_mode="html"
             )
     
     def start(self):
         self.client.add_event_handler(
-            self.speedtest,
+            self.speedtestt,
             events.NewMessage(pattern=r"^[./-_=]*(?i)\.speedtest$")
         )

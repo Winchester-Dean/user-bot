@@ -31,7 +31,6 @@ class HelpModule(SessionConfig):
                     if classname.endswith("Module"):
                         self.all_modules.append((
                             classname,
-                            classobj(),
                             classobj.__doc__
                         ))
 

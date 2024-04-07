@@ -13,15 +13,15 @@ class Main(SessionConfig):
         self,
         directory: str = "modules"
     ):
-        self.all_modules = List[Union[Callable, Awaitable]] = []
+        self.all_modules: List[Union[Callable, Awaitable]] = []
         self.files = os.listdir(directory)
 
         for file in self.files:
             if file.endswith(".py"):
-                file = file[:3]
+                file = file[:-3]
 
                 self.modules = import_module(
-                    f"{directory}:{file}"
+                    f"{directory}.{file}"
                 )
 
                 for classname, classobj in inspect.getmembers(
@@ -53,6 +53,8 @@ class Main(SessionConfig):
         with self.client:
             for modules in self.all_modules:
                 modules[1].start()
+
+            self.client.run_until_disconnected()
 
 if __name__ == "__main__":
     if os.name == "nt":
