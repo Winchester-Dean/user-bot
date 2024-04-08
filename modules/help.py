@@ -8,7 +8,7 @@ from telethon import events
 
 
 class HelpModule(SessionConfig):
-    """View all modules, command: help"""
+    """View all modules; command: <code>.help</code>"""
     def __init__(
         self,
         directory: str = "modules"
@@ -45,7 +45,7 @@ class HelpModule(SessionConfig):
             ):
                 name, doc = module
 
-                text += "{}. <code>{}</code>: <b>{}</b> \n".format(
+                text += "<b>{}. {}: {}</b> \n".format(
                     index + 1,
                     name,
                     doc
@@ -61,5 +61,5 @@ class HelpModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.help_handler,
-            events.NewMessage(pattern=f"^[./-_=]*(?i)\.help$")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.help$")
         )

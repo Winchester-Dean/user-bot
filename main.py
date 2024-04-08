@@ -43,11 +43,10 @@ class Main(SessionConfig):
             class_name, instance, doc = module
 
             console.print(
-                "[bold white]\t\t{}.[/]: [bold green]{}[/]".format(
+                "[bold white]\t\t{}.[/] [bold green]{}[/]".format(
                     index + 1, class_name
                 )
             )
-
             print()
         
         with self.client:
