@@ -5,10 +5,9 @@ import asyncio
 from session_config import SessionConfig
 from telethon import events
 
-
 class TerminalModule(SessionConfig):
-    """Module for running bash command in terminal, command: 
-        <code>.terminal</code> {command}"""
+    """Module for running bash command in terminal; command: 
+        <code>.terminal {command}</code>"""
     async def run_command(self, msg, cmd):
         if len(cmd.split(" ")) > 1 and cmd.split(" ")[0] == "sudo":
             needsswitch = True

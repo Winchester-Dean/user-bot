@@ -1,3 +1,5 @@
+import json
+
 from session_config import SessionConfig
 from telethon import events
 from telethon.tl.functions.users import GetFullUserRequest
@@ -5,86 +7,68 @@ from telethon.tl.functions.users import GetFullUserRequest
 class UserInfoModule(SessionConfig):
     """A module for obtaining information about the user through a response to his message;
     command: <code>.info</code>"""
+
+    strings = {
+        "loading": (
+            "<b>Getting information...</b>"
+        ),
+        "userinfo": (
+            "<b>🙇 User info:\n\n"
+            "🆔 ID: <code>{user_id}</code>\n"
+            "✡️ UserName: @{username}\n"
+            "First name: {first_name}\n"
+            "Last name: {last_name}\n"
+            "📞 Phone: {phone}\n"
+            "🔤 Bio: {bio}\n"
+            "❌ Is deleted: {deleted}\n"
+            "🤖 Is bot: {bot}\n"
+            "🚫 Is scam: {scam}\n"
+            "👎 Is fake: {fake}\n"
+            "❔ Is blocked: {blocked}\n"
+            "Account creation date: {create_date}"
+            "🔗 User link: <a href='tg://user?id={user_id}'>link</a>\n"
+            "</b>"
+        ),
+    }
+
     async def userinfo(self, msg):
         try:
             if not msg.is_reply:
                 return await msg.edit(
                     "⚠ <b>This command must be sent as a reply to one's message!</b>",
-                    parse_mode="html"
+                    reply_msg="html"
                 )
-
-            reply_msg = await self.client.get_message(
-                msg.peer_id,
-                ids = msg.reply_to.reply_to_msg_id
+            
+            await msg.edit(
+                strings["loading"],
+                parse_mode="html"
             )
 
-            user_id = reply_msg.from_id
+            reply_msg = await msg.get_reply_message()
+            user_id = reply_msg.sender_id
 
             user = await self.client(
                 GetFullUserRequest(user_id)
             )
 
-            strings = {
-                name: "UserInfo",
-                "loading": (
-                    "<b>Getting information...</b>"
-                ),
-                "userinfo": (
-                    "<b>🙇 User info:\n\n"
-                    "🆔 ID: <code>{user_id}</code>\n"
-                    "✡️ UserName: @{username}\n"
-                    "First name: {first_name}\n"
-                    "Last name: {last_name}\n"
-                    "📞 Phone: {phone}\n"
-                    "🔤 Bio: {bio}\n"
-                    "❌ Is deleted: {deleted}\n"
-                    "🤖 Is bot: {bot}\n"
-                    "🚫 Is scam: {scam}\n"
-                    "👎 Is fake: {fake}\n"
-                    "❔ Is blocked: {blocked}\n"
-                    "🔗 User link: <a href='tg://user?id={user_id}'>link</a>\n"
-                    "Account creation date: {create_date}"
-                    "</b>"
-                ),
-            }
-
             info = {
-                "user_id": "na/a",
-                "username": "n/a",
-                "first_name": "n/a",
-                "last_name": "n/a",
-                "phone": "n/a",
-                "bio": "n/a",
-                "deleted": "n/a",
-                "bot": "n/a",
-                "scam": "n/a",
-                "fake": "n/a",
-                "blocked": "n/a",
-                "create_date": "n/a"
+                "user_id": str(user.user.id),
+                "username": user.user.username,
+                "first_name": user.user.first_name,
+                "last_name": user.user.last_name,
+                "phone": user.user.phone,
+                "bio": user.user.about,
+                "deleted": user.user.deleted,
+                "bot": user.user.bot,
+                "scam": user.user.scam,
+                "fake": user.user.fake,
+                "blocked": user.user.blocked,
+                "create_date": user.user.date.strftime("%Y-%m-%d %H-%M-%S"),
             }
 
-            await msg.edit(
-                self.strings("loading"),
-                parse_mode="html"
-            )
+            formatted_info = strings["userinfo"].format(**info)
 
-            info["user_id"] = user.user.id
-            info["username"] = user.user.username
-            info["first_name"] = user.user.first_name
-            info["last_name"] = user.user.last_name
-            info["phone"] = user.user.phone
-            info["bio"] = user.user.about
-            info["deleted"] = user.user.deleted
-            info["bot"] = user.user.bot
-            info["scam"] = user.user.scam
-            info["fake"] = user.user.fake
-            info["blocked"] = user.user.blocked
-            info["create_date"] = user.user.date.strftime("%Y-%m-%d %H-%M:%S")
-
-            await msg.edit(
-                self.strings("userinfo").format(**info),
-                parse_mode="html"
-            )
+            await msg.edit(formatted_info, parse_mode="html")
         except Exception as error:
             await msg.edit(
                 f"⚠ <b>Error:</b> <code>{error}</code>",

@@ -39,6 +39,7 @@ class Main(SessionConfig):
         console.print(
             "[cold white]\t\tAll modules list:[/]\n"
         )
+        
         for index, module in enumerate(self.all_modules):
             class_name, instance, doc = module
 
@@ -47,7 +48,8 @@ class Main(SessionConfig):
                     index + 1, class_name
                 )
             )
-            print()
+
+        print()
         
         with self.client:
             for modules in self.all_modules:
