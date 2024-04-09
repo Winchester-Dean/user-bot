@@ -24,8 +24,7 @@ class UserInfoModule(SessionConfig):
             "🤖 Is bot: {bot}\n"
             "🚫 Is scam: {scam}\n"
             "👎 Is fake: {fake}\n"
-            "❔ Is blocked: {blocked}\n"
-            "Account creation date: {create_date}"
+            "❔ Is blocked:{blocked}\n"
             "🔗 User link: <a href='tg://user?id={user_id}'>link</a>\n"
             "</b>"
         ),
@@ -40,33 +39,30 @@ class UserInfoModule(SessionConfig):
                 )
             
             await msg.edit(
-                strings["loading"],
+                self.strings["loading"],
                 parse_mode="html"
             )
 
             reply_msg = await msg.get_reply_message()
-            user_id = reply_msg.sender_id
+            uuser_id = reply_msg.sender_id
 
-            user = await self.client(
-                GetFullUserRequest(user_id)
-            )
+            user = await self.client.get_entity(uuser_id)
 
             info = {
-                "user_id": str(user.user.id),
-                "username": user.user.username,
-                "first_name": user.user.first_name,
-                "last_name": user.user.last_name,
-                "phone": user.user.phone,
-                "bio": user.user.about,
-                "deleted": user.user.deleted,
-                "bot": user.user.bot,
-                "scam": user.user.scam,
-                "fake": user.user.fake,
-                "blocked": user.user.blocked,
-                "create_date": user.user.date.strftime("%Y-%m-%d %H-%M-%S"),
+                "user_id": str(user.id),
+                "username": user.username,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "phone": user.phone,
+                "bio": getattr(user, "about", False),
+                "deleted": user.deleted,
+                "bot": user.bot,
+                "scam": getattr(user, "scam", False),
+                "fake": getattr(user, "fake", False),
+                "blocked": getattr(user, "blocked", False),
             }
 
-            formatted_info = strings["userinfo"].format(**info)
+            formatted_info = self.strings["userinfo"].format(**info)
 
             await msg.edit(formatted_info, parse_mode="html")
         except Exception as error:
@@ -78,5 +74,5 @@ class UserInfoModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.userinfo,
-            events.NewMessage(pattern="^[./-_=]*(?i)\.info$")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.info")
         )

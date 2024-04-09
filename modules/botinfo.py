@@ -26,7 +26,7 @@ class UserBotInfoModule(SessionConfig):
                     f"{directory}.{file}"
                 )
 
-                for classname, classobj in inspect.gitmembers(
+                for classname, classobj in inspect.getmembers(
                     modules,
                     inspect.isclass
                 ):
@@ -55,7 +55,7 @@ class UserBotInfoModule(SessionConfig):
                 "<b>📝 License:</b> <a href='https://github.com/Winchester-Dean/user-bot/blob/main/LICENCE'>GNU GPL v3</a>\n"
                 f"<b>📂 Commit:</b> <a href='{self.get_remote_url()}/commit/{self.get_current_commit()}'>Link</a> <b>by {self.get_author_name()}</b>\n"
                 "<b>📃 Documentation:</b> <a href='https://github.com/Winchester-Dean/user-bot-documentation'>Link</a> <strong>by Dean Winchester</strong>\n"
-                f"<b>Modules count: {get_modules_count()}</b>"
+                f"<b>Modules count: {self.get_modules_count()}</b>"
             )
 
             await msg.edit(text, parse_mode="html")
@@ -68,5 +68,5 @@ class UserBotInfoModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.user_bot_info,
-            events.NewMessage(pattern="^[./-_=]*(?i)\.botinfo$")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.botinfo")
         )

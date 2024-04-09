@@ -67,9 +67,9 @@ class PythonModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.python,
-            events.NewMessage(pattern="^[./-_=]*(?i)\.python$")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.python")
         )
         self.client.add_event_handler(
             self.eval,
-            events.NewMessage(pattern="^[./-_=]*(?i)\.eval$")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.eval")
         )
