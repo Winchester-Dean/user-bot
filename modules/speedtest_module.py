@@ -34,5 +34,5 @@ class SpeedTestModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.speedtestt,
-            events.NewMessage(pattern="^[./-_=]*(?i)\.speedtest$")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.speedtest")
         )

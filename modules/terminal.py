@@ -66,5 +66,5 @@ class TerminalModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.terminal,
-            events.NewMessage(pattern=".terminal")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.terminal")
         )

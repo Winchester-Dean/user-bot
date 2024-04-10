@@ -24,5 +24,5 @@ class PingModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.ping,
-            events.NewMessage(pattern="^[./-_=]*(?i)\.ping$")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.ping")
         )

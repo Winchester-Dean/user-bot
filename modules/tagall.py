@@ -46,5 +46,5 @@ class TagAllModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.tag_all_handler,
-            events.NewMessage(pattern="^[./-_=]*(?i)\.tagall$")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.tagall")
         )

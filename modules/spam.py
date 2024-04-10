@@ -71,5 +71,5 @@ class SpamModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.spam,
-            events.NewMessage(pattern="^[./-_=]*(?i)\.spam$")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.spam")
         )

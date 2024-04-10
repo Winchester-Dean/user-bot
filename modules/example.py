@@ -12,5 +12,5 @@ class ExampleModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.example_handler,
-            events.NewMessage(pattern="^[./-_=]*(?i)\.example$")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.example")
         )

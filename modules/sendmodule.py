@@ -61,5 +61,5 @@ class SendModule(SessionConfig):
     def start(self):
         self.client.add_event_handler(
             self.sendmodule,
-            events.NewMessage(pattern=".sendmodule")
+            events.NewMessage(pattern="^[./-_=]*(?i)\.sendmodule")
         )
