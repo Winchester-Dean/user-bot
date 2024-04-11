@@ -29,8 +29,7 @@ class ServerInfoModule(SessionConfig):
             "Disk: {disk_used}G / {disk_total}G | "
             " available: {disk_free}G / ({disk_load}%)\n"
             "CPU: {cpu} cores {cpu_load}%\n"
-            "GPU: {gpu}\n"
-            "RAM: {ram}MB / {ram_load_md}MB ({ram_load}%)"
+            "RAM: {ram}MB / {ram_load_mb}MB ({ram_load}%)</b>"
         ),
     }
 
@@ -44,7 +43,7 @@ class ServerInfoModule(SessionConfig):
                 "arch": "n/a",
                 "disk_total": "n/a",
                 "disk_used": "n/a",
-                "disk_free": "n/a"
+                "disk_free": "n/a",
                 "disk_load": "n/a",
                 "cpu": "n/a",
                 "cpu_load": "n/a",
@@ -130,6 +129,6 @@ class ServerInfoModule(SessionConfig):
     
     def start(self):
         self.client.add_event_handler(
-            self.sendmodule,
+            self.serverinfo,
             events.NewMessage(pattern="^[./-_=]*(?i)\.serverinfo")
         )
