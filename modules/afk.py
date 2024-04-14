@@ -33,11 +33,19 @@ class AFKModule(SessionConfig):
             )
     
     async def afk_notification(self, event):
-        if self.afk_reason and event.is_private and event.sender_id != (await self.client.get_me()).id:
-            await event.reply(
-                f"<b>I'm currently AFK. Reason: {self.afk_reason}</b>",
-                parse_mode="html"
-            )
+        if self.afk_reason:
+            if event.is_reply and event.reply_to_msg_id:
+                replied_to = await event.get_reply_message()
+                if replied_to.sender_id == (await self.client.get_me()).id:
+                    await event.reply(
+                        f"<b>{self.afk_reason}</b>",
+                        parse_mode="html"
+                    )
+            elif event.message.mentioned:
+                await event.reply(
+                    f"<b>{self.afk_reason}</b>",
+                    parse_mode="html"
+                )
 
     def start(self):
         self.afk_reason = None
@@ -54,5 +62,6 @@ class AFKModule(SessionConfig):
         
         self.client.add_event_handler(
             self.afk_notification,
-            events.NewMessage()
+            events.NewMessage(incoming=True)
         )
+
