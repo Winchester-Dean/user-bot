@@ -30,9 +30,7 @@ class Main(SessionConfig):
                 ):
                     if classname.endswith("Module"):
                         self.all_modules.append((
-                            classname,
-                            classobj(),
-                            classobj.__doc__
+                            classname, classobj()
                         ))
     
     def start(self):
@@ -41,7 +39,7 @@ class Main(SessionConfig):
         )
         
         for index, module in enumerate(self.all_modules):
-            class_name, instance, doc = module
+            class_name, instance = module
 
             console.print(
                 "[bold white]\t\t{}.[/] [bold green]{}[/]".format(

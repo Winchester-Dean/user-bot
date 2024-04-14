@@ -24,7 +24,7 @@ class UserInfoModule(SessionConfig):
             "🤖 Is bot: {bot}\n"
             "🚫 Is scam: {scam}\n"
             "👎 Is fake: {fake}\n"
-            "❔ Is blocked:{blocked}\n"
+            "❔ Is blocked: {blocked}\n"
             "🔗 User link: <a href='tg://user?id={user_id}'>link</a>\n"
             "</b>"
         ),

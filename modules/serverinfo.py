@@ -22,14 +22,15 @@ class ServerInfoModule(SessionConfig):
             "<b>Loading server info...</b>"
         ),
         "serverinfo": (
-            "<b>Server Info: \n\n"
+            "<b>"
+            "Server Info: \n\n"
             "OS: {os}\n"
             "Karnel: {karnel}\n"
             "Arch: {arch}\n"
-            "Disk: {disk_used}G / {disk_total}G | "
-            " available: {disk_free}G / ({disk_load}%)\n"
+            "Disk: {disk_used}G / {disk_total}G / ({disk_load}%)\n"
             "CPU: {cpu} cores {cpu_load}%\n"
-            "RAM: {ram}MB / {ram_load_mb}MB ({ram_load}%)</b>"
+            "RAM: {ram}MB / {ram_load_mb}MB ({ram_load}%)"
+            "</b>"
         ),
     }
 
@@ -43,7 +44,6 @@ class ServerInfoModule(SessionConfig):
                 "arch": "n/a",
                 "disk_total": "n/a",
                 "disk_used": "n/a",
-                "disk_free": "n/a",
                 "disk_load": "n/a",
                 "cpu": "n/a",
                 "cpu_load": "n/a",
@@ -54,21 +54,19 @@ class ServerInfoModule(SessionConfig):
 
             with contextlib.suppress(Exception):
                 system = os.popen("cat /etc/*release").read()
-                b = system.find('DISTRIB_DESCRIPTION="') + 21
+                b = system.find('DISTRIB_DESCRIPTION=') + 21
                 system = system[b : system.find('"', b)]
-                info["os"] = utils.escape_html(system)
+                info["os"] = system
             
             with contextlib.suppress(Exception):
-                x = platform.release()
+                x = platform.machine()
                 o = platform.system()
                 g = platform.release()
 
-                text = f"{x} {o} {g}"
-
-                info["karnel"] = text
+                info["karnel"] = (x + ' ' + o + ' ' + g)
             
             with contextlib.suppress(Exception):
-                info["arch"] = f"{platform.architecture()[0]} {platform.machine()}"
+                info["arch"] = platform.architecture()[0]
             
             with contextlib.suppress(Exception):
                 disk_partitions = psutil.disk_partitions(all=False)
@@ -83,13 +81,6 @@ class ServerInfoModule(SessionConfig):
                 for partition in disk_partitions:
                     partition_usage = psutil.disk_usage(partition.mountpoint)
                     info["disk_used"] = bytes_to_gb(partition_usage.used)
-
-            with contextlib.suppress(Exception):
-                disk_partitions = psutil.disk_partitions(all=False)
-                
-                for partition in disk_partitions:
-                    partition_usage = psutil.disk_usage(partition.mountpoint)
-                    info["disk_free"] = bytes_to_gb(partition_usage.free)
 
             with contextlib.suppress(Exception):
                 disk_partitions = psutil.disk_partitions(all=False)

@@ -1,4 +1,5 @@
 import random
+import time
 
 from session_config import SessionConfig
 from telethon import events
@@ -32,6 +33,8 @@ class TagAllModule(SessionConfig):
                     text,
                     parse_mode="html"
                 )
+
+                time.sleep(5)
 
             await msg.edit(
                 "✔️ <b>Taging endend</b>",
