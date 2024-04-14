@@ -32,16 +32,10 @@ class AFKModule(SessionConfig):
                 parse_mode="html"
             )
     
-    async def afk_notification(self, msg):
-        try:
-            if self.afk_reason and event.is_private and event.sender_id != self.client.get_me().id:
-                await msg.reply(
-                    self.afk_reason,
-                    parse_mode="html"
-                )
-        except Exception as error:
-            await msg.edit(
-                f"<b>⚠️ Error:</b> <code>{error}</code>",
+    async def afk_notification(self, event):
+        if self.afk_reason and event.is_private and event.sender_id != (await self.client.get_me()).id:
+            await event.reply(
+                f"<b>I'm currently AFK. Reason: {self.afk_reason}</b>",
                 parse_mode="html"
             )
 

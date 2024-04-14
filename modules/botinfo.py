@@ -16,12 +16,12 @@ class UserBotInfoModule(SessionConfig):
         "loading": "<b>Getting bot information...</b>",
         "botinfo": (
             "<b>"
-            "\t\t<a href='{bot_url}'>Winchester-Dean/user-bot</a><br><br>"
-            "🛐 Author: Dean Winchester<br>"
-            "☑️ GitHub: <a href='https://github.com/Winchester-Dean'>Link</a><br>"
-            "📝 License: <a href='https://github.com/Winchester-Dean/user-bot/blob/main/LICENCE'>GNU GPL v3</a><br>"
-            "📂 Commit: <a href='{bot_url}/commit/{commit}'>Link</a> <b>by {author}<br>"
-            "📃 Documentation: <a href='https://github.com/Winchester-Dean/user-bot-documentation'>Link</a>"
+            "<a href='{bot_url}'>Winchester-Dean/user-bot</a>\n"
+            "🛐 Author: Dean Winchester\n"
+            "☑️ GitHub: <a href='https://github.com/Winchester-Dean'>Link</a>\n"
+            "📝 License: <a href='https://github.com/Winchester-Dean/user-bot/blob/main/LICENCE'>GNU GPL v3</a>\n"
+            "📂 Commit: <a href='{bot_url}/commit/{commit}'>Link</a> by {author}\n"
+            "📃 Documentation: <a href='https://github.com/Winchester-Dean/user-bot-documentation'>Link</a>\n"
             "Modules count: {modules_count}"
             "</b>"
         ),
@@ -65,14 +65,14 @@ class UserBotInfoModule(SessionConfig):
     async def user_bot_info(self, msg):
         try:
             await msg.edit(self.strings["loading"], parse_mode="html")
-
+            
             info = {
                 "bot_url": "n/a",
                 "commit": "n/a",
                 "author": "n/a",
                 "modules_count": "n/a"
             }
-
+            
             with contextlib.suppress(Exception):
                 info["bot_url"] = self.get_remote_url()
             
@@ -97,3 +97,4 @@ class UserBotInfoModule(SessionConfig):
             self.user_bot_info,
             events.NewMessage(pattern="^[./-_=]*(?i)\.botinfo")
         )
+

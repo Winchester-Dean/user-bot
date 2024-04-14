@@ -8,7 +8,7 @@ from faker import Faker
 class GoogleModule(SessionConfig):
     """Google search module; command: <code>.google {text}</code>"""
 
-    self.fake = Faker("ru_RU")
+    fake = Faker("ru_RU")
 
     async def google(self, msg):
         try:
