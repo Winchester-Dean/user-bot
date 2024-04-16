@@ -1,12 +1,12 @@
 import os
 import inspect
-import utils
 
 from typing import List, Callable, Awaitable, Union
 from importlib import import_module
+from session_config import SessionConfig
 from telethon import events
 
-class HelpModule:
+class HelpModule(SessionConfig):
     """View all modules list; command: <code>.help</code>"""
 
     def __init__(self, directory: str = "modules"):
@@ -40,7 +40,7 @@ class HelpModule:
             for module in self.all_modules:
                 name, doc = module
                 
-                text += "<b>🔹 {}: {}</b>".format(
+                text += "<b>🔹 {}: {}</b>\n".format(
                     name, doc
                 )
             
