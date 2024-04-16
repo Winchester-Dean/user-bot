@@ -36,12 +36,19 @@ class AFKModule(SessionConfig):
         if self.afk_reason:
             if event.is_reply and event.reply_to_msg_id:
                 replied_to = await event.get_reply_message()
+
                 if replied_to.sender_id == (await self.client.get_me()).id:
                     await event.reply(
                         f"<b>{self.afk_reason}</b>",
                         parse_mode="html"
                     )
-            elif event.message.mentioned:
+            elif event.is_group or event.is_private:
+                if event.message.mentioned:
+                    await event.reply(
+                        f"<b>{self.afk_reason}</b>",
+                        parse_mode="html"
+                    )
+            elif event.is_private:
                 await event.reply(
                     f"<b>{self.afk_reason}</b>",
                     parse_mode="html"

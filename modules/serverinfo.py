@@ -9,7 +9,6 @@ from telethon import events
 def bytes_to_gb(b: int) -> int:
     return round(b / 1024 ** 3, 1)
 
-
 def bytes_to_megabytes(b: int) -> int:
     return round(b / 1024 / 1024, 1)
 
@@ -22,15 +21,13 @@ class ServerInfoModule(SessionConfig):
             "<b>Loading server info...</b>"
         ),
         "serverinfo": (
-            "<b>"
-            "Server Info: \n\n"
-            "OS: {os}\n"
-            "Karnel: {karnel}\n"
-            "Arch: {arch}\n"
-            "Disk: {disk_used}G / {disk_total}G / ({disk_load}%)\n"
-            "CPU: {cpu} cores {cpu_load}%\n"
-            "RAM: {ram}MB / {ram_load_mb}MB ({ram_load}%)"
-            "</b>"
+            "<b>💻 Server Info: \n\n"
+            "🐧 OS: {os}\n"
+            "⚙️ Karnel: {karnel}\n"
+            "💻 Arch: {arch}\n"
+            "💾 Disk: {disk_used}G / {disk_total}G / ({disk_load}%)\n"
+            "🔄 CPU: {cpu} cores {cpu_load}%\n"
+            "🧠 RAM: {ram}MB / {ram_load_mb}MB ({ram_load}%)</b>"
         ),
     }
 
@@ -59,11 +56,10 @@ class ServerInfoModule(SessionConfig):
                 info["os"] = system
             
             with contextlib.suppress(Exception):
-                x = platform.machine()
                 o = platform.system()
                 g = platform.release()
 
-                info["karnel"] = (x + ' ' + o + ' ' + g)
+                info["karnel"] = (o + ' ' + g)
             
             with contextlib.suppress(Exception):
                 info["arch"] = platform.architecture()[0]
