@@ -26,3 +26,24 @@ Traceback (most recent call last):
   File "/root/user-bot/modules/afk.py", line 40, in afk_notification
     if replied_to.sender_id == (await self.client.get_me()).id:
 AttributeError: 'NoneType' object has no attribute 'sender_id'
+[H[J
+Copyright (C) 2024 https://github.com/Winchester-Dean/user-bot
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain 
+conditions.
+    
+                All modules list:
+
+                1. ServerInfoModule
+                2. UserInfoModule
+                3. ExampleModule
+                4. TerminalModule
+                5. TagAllModule
+                6. PythonModule
+                7. PingModule
+                8. AFKModule
+                9. GoogleSearchModule
+                10. UserBotInfoModule
+                11. SendModule
+                12. HelpModule
+                13. SpeedTestModule
