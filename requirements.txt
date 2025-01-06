@@ -1,3 +1,6 @@
+rich
+psutil
+youtube_dl
 telethon
 speedtest
 toml

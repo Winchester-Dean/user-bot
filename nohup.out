@@ -6,44 +6,14 @@ conditions.
     
                 All modules list:
 
-                1. GoogleModule
-                2. TagAllModule
-                3. UserBotInfoModule
-                4. TerminalModule
-                5. PythonModule
-                6. HelpModule
-                7. PingModule
-                8. ServerInfoModule
-                9. UserInfoModule
+                1. SendModule
+                2. PingModule
+                3. PythonModule
+                4. ServerInfoModule
+                5. UserBotInfoModule
+                6. UserInfoModule
+                7. TerminalModule
+                8. TagAllModule
+                9. HelpModule
                 10. AFKModule
-                11. SpeedTestModule
-                12. SendModule
-                13. ExampleModule
-Unhandled exception on afk_notification
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.8/dist-packages/telethon/client/updates.py", line 570, in _dispatch_update
-    await callback(event)
-  File "/root/user-bot/modules/afk.py", line 40, in afk_notification
-    if replied_to.sender_id == (await self.client.get_me()).id:
-AttributeError: 'NoneType' object has no attribute 'sender_id'
-[H[J
-Copyright (C) 2024 https://github.com/Winchester-Dean/user-bot
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain 
-conditions.
-    
-                All modules list:
-
-                1. ServerInfoModule
-                2. UserInfoModule
-                3. ExampleModule
-                4. TerminalModule
-                5. TagAllModule
-                6. PythonModule
-                7. PingModule
-                8. AFKModule
-                9. GoogleSearchModule
-                10. UserBotInfoModule
-                11. SendModule
-                12. HelpModule
-                13. SpeedTestModule
+                11. ExampleModule
